@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigablast - Yash Book Store House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Books Section */
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary);
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .book-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .book-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .book-card:hover .book-img img {
+            transform: scale(1.1);
+        }
+        
+        .book-info {
+            padding: 1.5rem;
+        }
+        
+        .book-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .book-info .author {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-info .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+        }
+        
+        /* About Section */
+        .about {
+            background: var(--light);
+            padding: 4rem 0;
+            margin: 3rem 0;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+        }
+        
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-details p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-details i {
+            color: var(--secondary);
+            width: 20px;
+        }
+        
+        .map {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Policy Pages */
+        .policy-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .policy-container h1 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .policy-container h2 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .policy-container p, .policy-container ul {
+            margin-bottom: 1rem;
+        }
+        
+        .policy-container ul {
+            padding-left: 1.5rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Gigablast <span>Books</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#books">Books</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="contact.html">Policy Pages</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Discover Your Next Favorite Book</h2>
+            <p>Gigablast Book Store offers the best collection of Indian literature and motivational books at amazing prices. Visit us in Latur or shop online!</p>
+            <a href="#books" class="btn">Explore Books</a>
+        </div>
+    </section>
+
+    <!-- Featured Books Section -->
+    <section class="container" id="books">
+        <h2 class="section-title">Featured Books</h2>
+        <div class="books-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-img">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="The Psychology of Money">
+                </div>
+                <div class="book-info">
+                    <h3>The Psychology of Money</h3>
+                    <div class="author">Morgan Housel</div>
+                    <div class="price">₹399</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-img">
+                    <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Ikigai">
+                </div>
+                <div class="book-info">
+                    <h3>Ikigai: The Japanese Secret to a Long and Happy Life</h3>
+                    <div class="author">Héctor García</div>
+                    <div class="price">₹449</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-img">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Think and Grow Rich">
+                </div>
+                <div class="book-info">
+                    <h3>Think and Grow Rich</h3>
+                    <div class="author">Napoleon Hill</div>
+                    <div class="price">₹299</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            
+            <!-- Book 4 -->
+            <div class="book-card">
+                <div class="book-img">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="The Alchemist">
+                </div>
+                <div class="book-info">
+                    <h3>The Alchemist</h3>
+                    <div class="author">Paulo Coelho</div>
+                    <div class="price">₹349</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Welcome to Gigablast (Yash Book Store House)</h2>
+                    <p>Located in the heart of Latur, we have been serving book lovers for over a decade. Our mission is to provide the best collection of Indian literature and motivational books at affordable prices.</p>
+                    <p>We carefully curate our collection to include both classic titles and the latest releases across various genres. Our knowledgeable staff is always ready to help you find your next great read.</p>
+                    <p>Whether you're a student, professional, or casual reader, Gigablast Book Store has something for everyone. Visit us today and experience the joy of reading!</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1533826418470-0cef7eb8bd4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Book Store Interior">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-details">
+                        <p><i class="fas fa-map-marker-alt"></i> Mitra Nagar, Near Tehsil office, MG Rd, opp. Chitikiran Lodge, Sawe Wadi, Latur, Maharashtra 413531</p>
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> info@gigablastbooks.com</p>
+                        <p><i class="fas fa-clock"></i> Monday-Saturday: 9AM-8PM, Sunday: 10AM-6PM</p>
+                    </div>
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3785.747918708209!2d76.563194574687!3d18.397382982722253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc50c27d91f98df%3A0x572c5c677129d1cf!2sLatur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1687858723456!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gigablast Books</h3>
+                    <p>Your one-stop destination for the best Indian literature and motivational books at great prices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#books">Books</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Policy Pages</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund & Cancellation</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Gigablast (Yash Book Store House). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Policy Pages (will be separate HTML files) -->
+    <!-- This is just a template for the policy pages -->
+    <div style="display: none;">
+        <!-- Contact Page Template -->
+        <div id="contact-page" class="policy-container">
+            <a href="index.html" class="back-btn">&larr; Back to Home</a>
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Reach out to us through any of the following methods:</p>
+            
+            <h2>Store Address</h2>
+            <p><strong>Gigablast (Yash Book Store House)</strong><br>
+            Mitra Nagar, Near Tehsil office, MG Rd<br>
+            opp. Chitikiran Lodge, Sawe Wadi<br>
+            Latur, Maharashtra 413531</p>
+            
+            <h2>Contact Information</h2>
+            <p><strong>Phone:</strong> +91 98765 43210<br>
+            <strong>Email:</strong> info@gigablastbooks.com<br>
+            <strong>Business Hours:</strong> Monday-Saturday: 9AM-8PM, Sunday: 10AM-6PM</p>
+            
+            <h2>Get In Touch</h2>
+            <p>For any queries regarding books, orders, or our services, please don't hesitate to contact us. Our knowledgeable staff is always ready to assist you.</p>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript for navigation smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
